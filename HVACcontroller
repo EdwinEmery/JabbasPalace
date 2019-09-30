@@ -1,0 +1,310 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+  enum HvacStatus {HVAC_OFF, AC_ON, FURNACE_ON};
+
+    HvacStatus status = HVAC_OFF;
+    int zone1Temp = 75, zone1Thermo = 75, zone2Temp = 80, zone2Thermo = 80;
+    bool iszone1DamperOpen = false, iszone2DamperOpen = false;
+
+    int input = -1;
+
+    while(input != 0)   ///print status and menu
+    {
+        cout << "Status: \n";
+            if (status == AC_ON)
+            {
+            cout << "AC ON" << endl;
+            }
+            else if (status == FURNACE_ON)
+            {
+            cout << "FURNACE ON" << endl;
+            }
+            else
+            {
+            cout << "HVAC OFF"  << endl;
+            }
+        cout << "Zone 1 thermostat: " << zone1Thermo << endl;
+        cout << "Zone 2 thermostat: " << zone2Thermo << endl;
+
+        cout << "Zone 1 damper is ";
+            if (iszone1DamperOpen == false)
+            {
+                cout << "CLOSED" << endl;
+            }
+            else
+            {
+                cout << "OPEN" << endl;
+            }
+         cout << "Zone 2 damper is ";
+            if (iszone2DamperOpen == false)
+            {
+                cout << "CLOSED" << endl;
+            }
+            else
+            {
+                cout << "OPEN" << endl;
+            }
+        cout << "Zone 1 temperature: " << zone1Temp << endl;
+        cout << "Zone 2 temperature: " << zone2Temp << endl;
+        cout << "Enter a menu choice:" << endl;
+        cout << "0)  Quit" << endl;
+        cout << "1)  Set thermostats" << endl;
+        cout << "2)  Wait 1 turn" << endl;
+        cout << "3)  Wait 10 turns" << endl;
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~// no bug ^^
+
+        cin >> input;
+
+        switch(input)
+        {
+            case 0:
+                //quit
+                break;
+
+            case 1:
+                cout << "Set the thermostat for zone 1: " << endl;     ///outputs prompts and set thermostats
+                cin >> zone1Thermo;
+                cout << "Set the thermostat for zone 2: " << endl;
+                cin >> zone2Thermo;
+
+                break;
+
+            case 2:
+                if (iszone1DamperOpen == true)                           ///check if zone1DamperOpen.
+                {
+                    if (status == AC_ON)
+                    {
+                    --zone1Temp; //bc AC is on
+
+                    }
+                    if (status == FURNACE_ON)
+                    {
+                    zone1Temp++; // bc furnace is on
+                    }
+                }
+                if (iszone2DamperOpen == true)                           ///check if zone2DamperOpen.
+                {
+                    if (status == AC_ON)
+                    {
+                    --zone2Temp; //bc AC is on , BUMP DOWN TEMP
+
+                    }
+                    if (status == FURNACE_ON)
+                    {
+                    zone2Temp++; // bc furnace is on
+                    }
+
+                }
+              
+                break;                              
+                
+            case 3:  
+            
+                for (int i=0; i< 9; i++)              ///for loop, run 10 times
+                {                                    ///in for loop:
+                    if (iszone1DamperOpen == true && zone1Temp > zone1Thermo)  // changed signs ///check if zone1DamperOpen AND zone1Temp != zone1Thermo.
+                        if (status == AC_ON)
+                        {
+                            zone1Temp--; //bc AC is on
+
+                        }
+                        if (status == FURNACE_ON)
+                        {
+                            zone1Temp++; // bc furnace is on
+                        }
+                        if (zone1Temp == zone1Thermo)
+                        {
+                            iszone1DamperOpen = false; // close the damper
+                        }
+                    if (iszone2DamperOpen == true && (zone2Temp > zone2Thermo)) //changed signs
+                    {
+                        if (status == AC_ON)
+                        {
+                            zone2Temp--; //bc AC is on
+
+                        }
+                        if (status == FURNACE_ON)
+                        {
+                            zone2Temp++; // bc furnace is on
+                        }
+                        if (zone2Temp == zone2Thermo)
+                        {
+                            iszone2DamperOpen = false; // close the damper
+                        }
+                    }
+                    if (zone1Thermo < zone1Temp || zone2Thermo < zone2Temp) // AC activates
+                    {
+                            status = AC_ON;
+                        if (zone1Thermo < zone1Temp)
+                        {
+                            iszone1DamperOpen = true;  
+                        }
+                        if (zone2Thermo < zone2Temp)
+                        {
+                            iszone2DamperOpen = true;  
+                        }
+                    }
+                    if ((zone1Thermo > zone1Temp || zone2Thermo > zone2Temp) && (status != AC_ON)) // FURNACE ACTIVATE!!! 
+                    {
+                        status = FURNACE_ON;            
+                        if (zone1Thermo > zone1Temp)
+                        {
+                            iszone1DamperOpen = true;  
+                        }
+                        if (zone2Thermo > zone2Temp)
+                        {
+                            iszone2DamperOpen = true;  
+                        }
+                    }
+                    if (zone1Thermo == zone1Temp && zone2Thermo == zone2Temp)
+                    {
+                        status = HVAC_OFF;
+                    }
+                // insert    
+                    
+                    
+                    
+                    
+                    if (zone1Thermo < zone1Temp || zone2Thermo < zone2Temp) // AC activates TK CHUNK 1
+        {
+        status = AC_ON;
+            if (zone1Thermo < zone1Temp)
+            {
+                iszone1DamperOpen = true;  
+            }
+            if (zone2Thermo < zone2Temp)
+            {
+                iszone2DamperOpen = true;  
+            }
+        }
+    if ((zone1Thermo > zone1Temp || zone2Thermo > zone2Temp) && (status != AC_ON)) // FURNACE ACTIVATE!!! 
+        {
+        status = FURNACE_ON;            
+            if (zone1Thermo > zone1Temp)
+            {
+                iszone1DamperOpen = true;  
+            }
+            if (zone2Thermo > zone2Temp)
+            {
+                iszone2DamperOpen = true;  
+            }
+        }
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                if (zone1Temp == zone1Thermo)                               //CHUNK 2
+        {
+            iszone1DamperOpen = false; // close the damper
+        }
+    if (zone2Temp == zone2Thermo)
+        {
+            iszone2DamperOpen = false; // close the damper
+        }
+        
+    if (iszone1DamperOpen == false && iszone2DamperOpen == false)
+        {   
+            status = HVAC_OFF;
+        }
+  
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   //desperate attempts to fix by pounding in code 
+                }
+                
+                       
+                    
+                        
+                        
+                        
+                //FOR LOOP ENDS
+                break; 
+
+        } //SWITCH ENDS HERE!!!!      no bug ^^
+
+    if (zone1Thermo < zone1Temp || zone2Thermo < zone2Temp) // AC activates TK
+        {
+        status = AC_ON;
+            if (zone1Thermo < zone1Temp)
+            {
+                iszone1DamperOpen = true;  
+            }
+            if (zone2Thermo < zone2Temp)
+            {
+                iszone2DamperOpen = true;  
+            }
+        }
+    if ((zone1Thermo > zone1Temp || zone2Thermo > zone2Temp) && (status != AC_ON)) // FURNACE ACTIVATE!!! 
+        {
+        status = FURNACE_ON;            
+            if (zone1Thermo > zone1Temp)
+            {
+                iszone1DamperOpen = true;  
+            }
+            if (zone2Thermo > zone2Temp)
+            {
+                iszone2DamperOpen = true;  
+            }
+        }
+        
+    
+    
+    
+    
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+    
+    
+    if (zone1Temp == zone1Thermo)
+        {
+            iszone1DamperOpen = false; // close the damper
+        }
+    if (zone2Temp == zone2Thermo)
+        {
+            iszone2DamperOpen = false; // close the damper
+        }
+        
+    if (iszone1DamperOpen == false && iszone2DamperOpen == false)
+        {   
+            status = HVAC_OFF;
+        }
+
+            ///Handle your state changes here, regardless of what the input was
+        ///use the following logic:
+        ///if zone1Thermo < zone1Temp OR zone2Thermo < zone2Temp
+        ///then set status to AC_ON and determine which dampers to open: (1, 2, or both).
+        ///don't forget to close dampers that are not decidedly open.
+        ///otherwise, if zone1Thermo > zone1Temp OR zone2Thermo > zone2Temp
+        ///then set status to FURNACE_ON and determine which dampers to open: (1, 2, or both)
+        ///don't forget to close dampers that are not decidedly open.
+        ///Otherwise, set status to HVAC_OFF and close both dampers
+    
+    } ///end while loop
+return 0;
+}
