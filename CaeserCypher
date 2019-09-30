@@ -1,0 +1,130 @@
+#include <stdio.h> // TQ Am I using the right libraries?
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+void convertToUppercase(char []);
+void encrypt(char [], int);
+void decrypt(char [], int);
+
+
+
+void convertToUppercase(char toEncrypt[]) // TQ why toEncrypt []?
+{
+    int i;
+    for(i = 0; i< strlen(toEncrypt); i++)
+    {
+        toEncrypt[i] = toupper(toEncrypt[i]);
+    }
+}
+
+void encrypt(char toEncrypt[], int shiftKey)
+{
+
+
+  int i = 0;
+  for(i = 0; i < strlen(toEncrypt); i++)
+  {
+    if((toEncrypt[i] + shiftKey > 'Z'))
+    {
+      toEncrypt[i] = toEncrypt[i] + shiftKey - 26;
+    }
+
+    else if(toEncrypt[i] + shiftKey < 'A')
+    {
+      toEncrypt[i] = toEncrypt[i] + shiftKey + 26;
+    }
+
+    else //(toEncrypt[i] + shiftKey > 'A' && toEncrypt[i] + shiftKey < 'Z')
+    {
+      toEncrypt[i] = toEncrypt[i] + shiftKey;
+    }
+  }
+  printf("%s", toEncrypt);
+}
+
+void decrypt(char toDecrypt[], int shiftKeyD)
+{
+
+  shiftKeyD = -1 * (shiftKeyD);
+  int i = 0;
+  for(i = 0; i < strlen(toDecrypt); i++)
+  {
+    if((toDecrypt[i] + shiftKeyD > 'Z'))
+    {
+      toDecrypt[i] = toDecrypt[i] + shiftKeyD - 26;
+    }
+
+    else if(toDecrypt[i] + shiftKeyD < 'A')
+    {
+      toDecrypt[i] = toDecrypt[i] + shiftKeyD + 26;
+    }
+
+    else //(toEncrypt[i] + shiftKey > 'A' && toEncrypt[i] + shiftKey < 'Z')
+    {
+      toDecrypt[i] = toDecrypt[i] + shiftKeyD;
+    }
+  }
+  printf("%s", toDecrypt);
+}
+
+
+
+
+
+
+int main()
+{
+    int selection = 0;
+    do
+    {
+    char toEncrypt[20] = ""; // TQ did I set this up correctly?
+    char toDecrypt[20] = "";
+    int shiftKey = 0;
+    int shiftKeyD = 0;
+    printf("Enter the number of your selection: \n 1. Encrypt \n 2. Decrypt \n 3. Exit \n");
+    scanf("%d", &selection);
+
+      switch(selection)
+    {
+
+
+
+    case 1:
+    printf("Enter the shift key: ");
+    scanf("%d", &shiftKey);
+    printf("Enter the string to encrypt: \n");
+    scanf("%s", toEncrypt);
+    printf("Here is your encrypted string: \n");
+    convertToUppercase(toEncrypt);
+    encrypt(toEncrypt, shiftKey);
+    printf("\n");
+
+
+
+    break;
+
+    case 2:
+    printf("Enter the shift key: ");
+    scanf("%d", &shiftKey);
+    //shiftKeyD = -1 * (shiftKey);
+    printf("Enter the string to decrypt: \n");
+    scanf("%s", toDecrypt);
+    printf("Here is your decrypted string: \n");
+    convertToUppercase(toDecrypt);
+    decrypt(toDecrypt, shiftKey);
+
+
+    printf("\n");
+
+    break;
+
+    case 3:
+
+    break;
+    }
+    } while (selection !=3);
+
+    return 0;
+}
+
